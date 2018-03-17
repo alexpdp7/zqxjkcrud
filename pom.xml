@@ -93,9 +93,9 @@
 				<version>3.6</version>
 				<executions>
 					<execution>
+						<phase>validate</phase>
 						<goals>
 							<goal>check</goal>
-							<goal>cpd-check</goal>
 						</goals>
 					</execution>
 				</executions>
