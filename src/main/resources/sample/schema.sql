@@ -14,4 +14,11 @@ create view zqxjk._users as
 	select username, password
 	from sample_app.users;
 
+create view zqxjk.users as
+	select id as _id,
+	       username as _friendly,
+	       username,
+	       password
+	from   sample_app.users;
+
 set search_path to zqxjk;
