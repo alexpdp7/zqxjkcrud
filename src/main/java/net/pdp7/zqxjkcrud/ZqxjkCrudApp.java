@@ -27,7 +27,7 @@ public class ZqxjkCrudApp {
 		return "index";
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication.run(ZqxjkCrudApp.class, args);
 	}
 }
