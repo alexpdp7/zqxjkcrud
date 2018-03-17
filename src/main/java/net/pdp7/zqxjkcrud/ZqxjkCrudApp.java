@@ -57,8 +57,8 @@ public class ZqxjkCrudApp {
 
 	@RequestMapping("/")
 	public ModelAndView index() {
-		return new ModelAndView("index",
-				ImmutableMap.<String, Object>builder().put("tables", dao().getViewableTables().collect(Collectors.toList())).build());
+		return new ModelAndView("index", ImmutableMap.<String, Object>builder()
+				.put("tables", dao().getViewableTables().collect(Collectors.toList())).build());
 	}
 
 	public static void main(String[] args) {
