@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import net.pdp7.zqxjkcrud.security.UserDetailsService;
+import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
 
 @SpringBootApplication
 @Controller
@@ -18,8 +18,8 @@ public class ZqxjkCrudApp {
 	protected NamedParameterJdbcTemplate jdbcTemplate;
 
 	@Bean
-	public UserDetailsService userDetailsService(NamedParameterJdbcTemplate jdbcTemplate) {
-		return new UserDetailsService(jdbcTemplate);
+	public UserDetailsServiceImpl userDetailsService(NamedParameterJdbcTemplate jdbcTemplate) {
+		return new UserDetailsServiceImpl(jdbcTemplate);
 	}
 
 	@RequestMapping("/")
