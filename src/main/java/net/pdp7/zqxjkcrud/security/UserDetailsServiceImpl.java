@@ -1,34 +1,27 @@
 package net.pdp7.zqxjkcrud.security;
 
-import java.util.Collections;
-import java.util.Map;
+import static org.jooq.impl.DSL.field;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import java.util.Collections;
+
+import org.jooq.DSLContext;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import com.google.common.collect.ImmutableMap;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	protected final NamedParameterJdbcTemplate jdbcTemplate;
+	protected final DSLContext dslContext;
 
-	public UserDetailsServiceImpl(NamedParameterJdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
+	public UserDetailsServiceImpl(DSLContext dslContext) {
+		this.dslContext = dslContext;
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		try {
-			Map<String, Object> user = jdbcTemplate.queryForMap("select * from _users where username = :username",
-					ImmutableMap.<String, Object>builder().put("username", username).build());
-			return new User(username, "{noop}" + (String) user.get("password"), Collections.emptyList());
-		} catch (EmptyResultDataAccessException e) {
-			throw new UsernameNotFoundException(username + " not found", e);
-		}
+	public UserDetails loadUserByUsername(String username) {
+		String password = dslContext.select().from("_users").where(field("username").eq(username))
+				.fetchSingle("password", String.class);
+		return new User(username, "{noop}" + password, Collections.emptyList());
 	}
 
 }

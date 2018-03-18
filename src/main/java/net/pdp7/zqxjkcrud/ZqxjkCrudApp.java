@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,12 +26,9 @@ public class ZqxjkCrudApp {
 	@Autowired
 	public DSLContext dslContext;
 
-	@Autowired
-	protected NamedParameterJdbcTemplate jdbcTemplate;
-
 	@Bean
-	public UserDetailsServiceImpl userDetailsService(NamedParameterJdbcTemplate jdbcTemplate) {
-		return new UserDetailsServiceImpl(jdbcTemplate);
+	public UserDetailsServiceImpl userDetailsService() {
+		return new UserDetailsServiceImpl(dslContext);
 	}
 
 	@Value("${zqxjk.schema}")
