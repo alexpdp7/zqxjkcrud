@@ -17,6 +17,9 @@ public class Dao {
 	}
 
 	public Stream<Table> getTables() {
-		return getCatalog().getTables().stream().filter(t -> !t.getName().startsWith("_")).map(t -> new Table(t));
+		return getCatalog().getTables()
+				.stream()
+				.filter(t -> !t.getName().startsWith("_"))
+				.map(t -> new Table(t));
 	}
 }

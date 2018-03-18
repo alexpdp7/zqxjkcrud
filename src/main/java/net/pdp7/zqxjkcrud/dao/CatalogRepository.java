@@ -12,7 +12,9 @@ public class CatalogRepository {
 	protected final DSLContext dslContext;
 	protected final SchemaCrawlerOptions schemaCrawlerOptions;
 
-	public CatalogRepository(DSLContext dslContext, SchemaCrawlerOptions schemaCrawlerOptions) {
+	public CatalogRepository(
+			DSLContext dslContext,
+			SchemaCrawlerOptions schemaCrawlerOptions) {
 		this.dslContext = dslContext;
 		this.schemaCrawlerOptions = schemaCrawlerOptions;
 	}
@@ -20,6 +22,8 @@ public class CatalogRepository {
 	@Cacheable(cacheNames = "catalogs")
 	public Catalog getCatalog() {
 		return (Catalog) dslContext
-				.connectionResult(connection -> SchemaCrawlerUtility.getCatalog(connection, schemaCrawlerOptions));
+				.connectionResult(
+						connection -> SchemaCrawlerUtility
+								.getCatalog(connection, schemaCrawlerOptions));
 	}
 }
