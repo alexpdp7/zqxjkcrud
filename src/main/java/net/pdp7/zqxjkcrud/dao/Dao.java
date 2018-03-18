@@ -16,15 +16,7 @@ public class Dao {
 		return catalogRepository.getCatalog();
 	}
 
-	protected Stream<String> getTables() {
-		return getCatalog().getTables().stream().map(t -> t.getName());
-	}
-
-	public Stream<String> getViewableTables() {
-		return getTables().filter(Dao::isViewableTable);
-	}
-
-	public static boolean isViewableTable(String tableName) {
-		return !tableName.startsWith("_");
+	public Stream<Table> getTables() {
+		return getCatalog().getTables().stream().filter(t -> !t.getName().startsWith("_")).map(t -> new Table(t));
 	}
 }
