@@ -16,6 +16,7 @@ import net.pdp7.zqxjkcrud.dao.CatalogRepository;
 import net.pdp7.zqxjkcrud.dao.Dao;
 import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
 @SpringBootApplication
 @Controller
@@ -34,9 +35,9 @@ public class ZqxjkCrudApp {
 
 	@Bean
 	public SchemaCrawlerOptions schemaCrawlerOptions() {
-		SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-		options.setSchemaInclusionRule(s -> s.equals(zqxjkSchema));
-		return options;
+		return SchemaCrawlerOptionsBuilder.builder()
+				.includeSchemas(s -> s.equals(zqxjkSchema))
+				.toOptions();
 	}
 
 	@Bean
