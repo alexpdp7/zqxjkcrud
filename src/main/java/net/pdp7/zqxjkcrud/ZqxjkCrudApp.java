@@ -57,7 +57,10 @@ public class ZqxjkCrudApp {
 	@RequestMapping("/")
 	public ModelAndView index() {
 		return new ModelAndView("index",
-				Collections.singletonMap("tables", dao().getTables().values()));
+				ImmutableMap.<String, Object>builder()
+				.put("tables", dao().getTables().values())
+				.build());
+
 	}
 
 	@RequestMapping("/table/{name}")
