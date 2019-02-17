@@ -1,6 +1,7 @@
 package net.pdp7.zqxjkcrud.dao;
 
-import java.util.stream.Stream;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import schemacrawler.schema.Catalog;
 
@@ -16,10 +17,14 @@ public class Dao {
 		return catalogRepository.getCatalog();
 	}
 
-	public Stream<Table> getTables() {
+	public Map<String, Table> getTables() {
 		return getCatalog().getTables()
 				.stream()
-				.filter(t -> !t.getName().startsWith("_"))
-				.map(t -> new Table(t));
+				.filter(this::isVisibleTable)
+				.collect(Collectors.toMap(t -> t.getName(), Table::new));
+	}
+
+	protected boolean isVisibleTable(schemacrawler.schema.Table table) {
+		return !table.getName().startsWith("_");
 	}
 }

@@ -56,14 +56,14 @@ public class ZqxjkCrudApp {
 	@RequestMapping("/")
 	public ModelAndView index() {
 		return new ModelAndView("index",
-				Collections.singletonMap("tables", dao().getTables().iterator()));
+				Collections.singletonMap("tables", dao().getTables().values()));
 	}
 
 	@RequestMapping("/table/{name}")
 	public ModelAndView table(@PathVariable String name) {
 		return new ModelAndView("table",
 				ImmutableMap.<String, Object>builder()
-				.put("tableName", name)
+				.put("table", dao().getTables().get(name))
 				.build());
 	}
 
