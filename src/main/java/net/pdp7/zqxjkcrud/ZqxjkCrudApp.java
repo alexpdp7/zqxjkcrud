@@ -17,6 +17,7 @@ import com.google.common.collect.ImmutableMap;
 
 import net.pdp7.zqxjkcrud.dao.CatalogRepository;
 import net.pdp7.zqxjkcrud.dao.Dao;
+import net.pdp7.zqxjkcrud.dao.Table;
 import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -50,7 +51,7 @@ public class ZqxjkCrudApp {
 
 	@Bean
 	public Dao dao() {
-		return new Dao(catalogRepository());
+		return new Dao(catalogRepository(), dslContext);
 	}
 
 	@RequestMapping("/")
@@ -61,9 +62,11 @@ public class ZqxjkCrudApp {
 
 	@RequestMapping("/table/{name}")
 	public ModelAndView table(@PathVariable String name) {
+		Table table = dao().getTables().get(name);
 		return new ModelAndView("table",
 				ImmutableMap.<String, Object>builder()
-				.put("table", dao().getTables().get(name))
+				.put("table", table)
+				.put("list", table.list())
 				.build());
 	}
 
