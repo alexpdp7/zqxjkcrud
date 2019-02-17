@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.from("_users")
 				.where(field("username").eq(username))
 				.fetchSingle("password", String.class);
-		return new User(username, "{noop}" + password, Collections.emptyList());
+		return new User(username, password, Collections.emptyList());
 	}
 
 }

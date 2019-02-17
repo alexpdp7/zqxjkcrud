@@ -6,7 +6,7 @@ create table sample_app.users (
 	password                 text not null
 );
 
-insert into sample_app.users(username, password) values ('admin', 'admin');
+insert into sample_app.users(username, password) values ('admin', '{noop}admin');
 
 create schema test;
 
