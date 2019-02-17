@@ -1,7 +1,5 @@
 package net.pdp7.zqxjkcrud;
 
-import java.util.Collections;
-
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,7 +58,6 @@ public class ZqxjkCrudApp {
 				ImmutableMap.<String, Object>builder()
 				.put("tables", dao().getTables().values())
 				.build());
-
 	}
 
 	@RequestMapping("/table/{name}")
@@ -70,6 +67,15 @@ public class ZqxjkCrudApp {
 				ImmutableMap.<String, Object>builder()
 				.put("table", table)
 				.put("rows", table.getRows())
+				.build());
+	}
+
+	@RequestMapping("/table/{name}/new")
+	public ModelAndView newView(@PathVariable String name) {
+		Table table = dao().getTables().get(name);
+		return new ModelAndView("row",
+				ImmutableMap.<String, Object>builder()
+				.put("table", table)
 				.build());
 	}
 

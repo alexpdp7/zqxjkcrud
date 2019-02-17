@@ -6,5 +6,6 @@
 				<td><a th:href="@{/table/{table}/row/{id}(table=${table.name}, id=${row.id})}" th:text="${row.display}">Display</a></td>
 			</tr>
 		</table>
+		<a th:href="@{/table/{table}/new/(table=${table.name})}">New</a>
 	</body>
 </html>

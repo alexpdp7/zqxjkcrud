@@ -1,5 +1,6 @@
 package net.pdp7.zqxjkcrud.dao;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.DSLContext;
@@ -20,5 +21,13 @@ public class Table {
 
 	public List<Row> getRows() {
 		return dslContext.select().from(getName()).fetch(r -> new Row(r));
+	}
+
+	public Iterator<Field> getFields() {
+		return table.getColumns()
+				.stream()
+				.filter(c -> !c.getName().startsWith("_"))
+				.map(c -> new Field(c))
+				.iterator();
 	}
 }

@@ -1,0 +1,11 @@
+<html>
+	<body>
+		<form method="POST">
+			<label th:each="field : ${table.fields}">
+				[[${field.name}]]
+				<input type="text"/>
+			</label>
+			<input type="submit"/>
+		</form>
+	</body>
+</html>
