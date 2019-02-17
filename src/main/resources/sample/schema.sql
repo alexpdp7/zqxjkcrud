@@ -16,7 +16,7 @@ create view test._users as
 
 create view test.users as
 	select id as _id,
-	       username as _friendly,
+	       username as _display,
 	       username,
 	       password
 	from   sample_app.users;

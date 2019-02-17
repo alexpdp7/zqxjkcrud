@@ -66,7 +66,7 @@ public class ZqxjkCrudApp {
 		return new ModelAndView("table",
 				ImmutableMap.<String, Object>builder()
 				.put("table", table)
-				.put("list", table.list())
+				.put("rows", table.getRows())
 				.build());
 	}
 

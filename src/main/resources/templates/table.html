@@ -1,6 +1,10 @@
 <html>
 	<body>
 		<p th:text="${table.name}">Table</p>
-		<pre th:text="${list}">Foo</pre>
+		<table>
+			<tr th:each="row : ${rows}">
+				<td><a th:href="@{/table/{table}/row/{id}(table=${table.name}, id=${row.id})}" th:text="${row.display}">Display</a></td>
+			</tr>
+		</table>
 	</body>
 </html>

@@ -1,8 +1,8 @@
 package net.pdp7.zqxjkcrud.dao;
 
+import java.util.List;
+
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
 
 public class Table {
 
@@ -18,7 +18,7 @@ public class Table {
 		return table.getName();
 	}
 
-	public Result<Record> list() {
-		return dslContext.select().from(getName()).fetch();
+	public List<Row> getRows() {
+		return dslContext.select().from(getName()).fetch(r -> new Row(r));
 	}
 }
