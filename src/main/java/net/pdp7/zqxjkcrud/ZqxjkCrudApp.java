@@ -9,8 +9,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.common.collect.ImmutableMap;
 
 import net.pdp7.zqxjkcrud.dao.CatalogRepository;
 import net.pdp7.zqxjkcrud.dao.Dao;
@@ -54,6 +57,14 @@ public class ZqxjkCrudApp {
 	public ModelAndView index() {
 		return new ModelAndView("index",
 				Collections.singletonMap("tables", dao().getTables().iterator()));
+	}
+
+	@RequestMapping("/table/{name}")
+	public ModelAndView table(@PathVariable String name) {
+		return new ModelAndView("table",
+				ImmutableMap.<String, Object>builder()
+				.put("tableName", name)
+				.build());
 	}
 
 	public static void main(String[] args) {
