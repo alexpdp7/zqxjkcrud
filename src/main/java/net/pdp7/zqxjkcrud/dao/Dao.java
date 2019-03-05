@@ -4,7 +4,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.impl.DSL;
 
+import net.pdp7.zqxjkcrud.dao.Update.TableUpdate;
 import schemacrawler.schema.Catalog;
 
 public class Dao {
@@ -25,10 +28,32 @@ public class Dao {
 		return getCatalog().getTables()
 				.stream()
 				.filter(this::isVisibleTable)
-				.collect(Collectors.toMap(t -> t.getName(), t -> new Table(t, dslContext)));
+				.collect(
+						Collectors
+								.toMap(t -> t.getName(), t -> new Table(t, dslContext)));
 	}
 
 	protected boolean isVisibleTable(schemacrawler.schema.Table table) {
 		return !table.getName().startsWith("_");
+	}
+
+	public void update(Update update) {
+		for (TableUpdate tableUpdate : update.tableUpdates) {
+			Map<Field<Object>, Object> fields = tableUpdate.fields.entrySet()
+					.stream()
+					.collect(
+							Collectors.toMap(
+									e -> DSL.field((String) e.getKey()),
+									e -> e.getValue()));
+			switch (tableUpdate.action) {
+			case INSERT:
+				dslContext.insertInto(DSL.table(tableUpdate.table))
+						.set(fields)
+						.execute();
+				break;
+			default:
+				throw new RuntimeException("Unknown operation");
+			}
+		}
 	}
 }

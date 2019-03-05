@@ -12,12 +12,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.pdp7.zqxjkcrud.dao.CatalogRepository;
 import net.pdp7.zqxjkcrud.dao.Dao;
 import net.pdp7.zqxjkcrud.dao.Table;
+import net.pdp7.zqxjkcrud.dao.Update;
 import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -74,6 +77,13 @@ public class ZqxjkCrudApp {
 		Table table = dao().getTables().get(name);
 		return new ModelAndView("row",
 				Map.of("table", table));
+	}
+
+	@PostMapping("/update")
+	public String update(String next, WebRequest request) {
+		Update update = new Update(request.getParameterMap());
+		dao().update(update);
+		return "redirect:" + next;
 	}
 
 	public static void main(String[] args) {

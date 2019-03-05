@@ -1,11 +1,15 @@
 <html>
 	<body>
-		<form method="POST">
+		<form method="POST" action="/update">
 			<label th:each="field : ${table.fields}">
 				[[${field.name}]]
-				<input type="text"/>
+				<input type="text" th:name="@{data/0/{field}/value(field=${field.name})}"/>
 			</label>
 			<input type="submit"/>
+			<input type="hidden" name="data/0/_table" th:value="${table.name}"/>
+			<input type="hidden" name="data/0/_action" value="INSERT"/>
+			<input type="hidden" name="next" th:value="@{/table/{table}/(table=${table.name})}"/>
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 		</form>
 	</body>
 </html>
