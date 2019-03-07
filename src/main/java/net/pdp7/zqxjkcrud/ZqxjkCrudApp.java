@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import net.pdp7.zqxjkcrud.dao.CatalogRepository;
 import net.pdp7.zqxjkcrud.dao.Dao;
+import net.pdp7.zqxjkcrud.dao.Row;
 import net.pdp7.zqxjkcrud.dao.Table;
 import net.pdp7.zqxjkcrud.dao.Update;
 import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
@@ -76,7 +77,21 @@ public class ZqxjkCrudApp {
 	public ModelAndView newView(@PathVariable String name) {
 		Table table = dao().getTables().get(name);
 		return new ModelAndView("row",
-				Map.of("table", table));
+				Map.ofEntries(
+						entry("table", table),
+						entry("row", new Row.TransientRow()),
+						entry("action", Update.TableAction.INSERT)));
+	}
+
+	@RequestMapping("/table/{name}/row/{id}")
+	public ModelAndView rowView(@PathVariable String name, @PathVariable String id) {
+		Table table = dao().getTables().get(name);
+		Row row = table.getRow(id);
+		return new ModelAndView("row",
+				Map.ofEntries(
+						entry("table", table),
+						entry("row", row),
+						entry("action", Update.TableAction.UPDATE)));
 	}
 
 	@PostMapping("/update")

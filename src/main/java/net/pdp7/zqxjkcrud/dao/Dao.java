@@ -51,6 +51,12 @@ public class Dao {
 						.set(fields)
 						.execute();
 				break;
+			case UPDATE:
+				dslContext.update(DSL.table(tableUpdate.table))
+					.set(fields)
+					.where(DSL.field("_id").cast(String.class).equal(tableUpdate.id))
+					.execute();
+				break;
 			default:
 				throw new RuntimeException("Unknown operation");
 			}

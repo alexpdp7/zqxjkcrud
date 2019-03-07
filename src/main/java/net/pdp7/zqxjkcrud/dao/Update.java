@@ -26,12 +26,14 @@ public class Update {
 
 	public final class TableUpdate {
 		public final String table;
+		public final String id;
 		public final TableAction action;
 		public final Map<String, Object> fields;
 
 		private TableUpdate(Map<String, String[]> form) {
 			table = form.remove("_table")[0];
 			action = TableAction.valueOf(form.remove("_action")[0]);
+			id = form.remove("_id")[0];
 			fields = form.keySet()
 					.stream()
 					.map(k -> k.substring(0, k.indexOf("/")))
@@ -46,6 +48,6 @@ public class Update {
 	}
 
 	public enum TableAction {
-		INSERT;
+		INSERT, UPDATE;
 	}
 }

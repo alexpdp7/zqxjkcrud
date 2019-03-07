@@ -1,20 +1,53 @@
 package net.pdp7.zqxjkcrud.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jooq.Record;
 
-public class Row {
+public abstract class Row {
 
-	protected final Record record;
+	public abstract String getId();
 
-	public Row(Record record) {
-		this.record = record;
+	public abstract String getDisplay();
+
+	public abstract Map<String, Object> getFields();
+
+	public static class RecordRow extends Row {
+		protected final Record record;
+
+		public RecordRow(Record record) {
+			this.record = record;
+		}
+
+		public String getId() {
+			return record.get("_id").toString();
+		}
+
+		public String getDisplay() {
+			return record.get("_display").toString();
+		}
+
+		public Map<String, Object> getFields() {
+			return record.intoMap();
+		}
 	}
 
-	public String getId() {
-		return record.get("_id").toString();
-	}
+	public static class TransientRow extends Row {
 
-	public String getDisplay() {
-		return record.get("_display").toString();
+		@Override
+		public String getId() {
+			return null;
+		}
+
+		@Override
+		public String getDisplay() {
+			return null;
+		}
+
+		@Override
+		public Map<String, Object> getFields() {
+			return new HashMap<>();
+		}
 	}
 }

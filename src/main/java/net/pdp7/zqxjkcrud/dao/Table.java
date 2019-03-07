@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
 
 public class Table {
 
@@ -20,7 +21,7 @@ public class Table {
 	}
 
 	public List<Row> getRows() {
-		return dslContext.select().from(getName()).fetch(r -> new Row(r));
+		return dslContext.select().from(getName()).fetch(r -> new Row.RecordRow(r));
 	}
 
 	public Iterator<Field> getFields() {
@@ -29,5 +30,12 @@ public class Table {
 				.filter(c -> !c.getName().startsWith("_"))
 				.map(c -> new Field(c))
 				.iterator();
+	}
+
+	public Row getRow(String id) {
+		return dslContext.select()
+				.from(getName())
+				.where(DSL.field("_id").cast(String.class).equal(id))
+				.fetchOne(r -> new Row.RecordRow(r));
 	}
 }
