@@ -24,7 +24,7 @@ public class Update {
 				.collect(Collectors.toList());
 	}
 
-	public final class TableUpdate {
+	public static final class TableUpdate {
 		public final String table;
 		public final String id;
 		public final TableAction action;
