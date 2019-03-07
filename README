@@ -1,0 +1,3 @@
+DEMO
+
+$ mvn spring-boot:run  # requires Java 9 or later
