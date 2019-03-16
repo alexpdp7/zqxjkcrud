@@ -36,6 +36,12 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>spring-boot-security-saml</artifactId>
+			<version>1.16</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
@@ -147,4 +153,16 @@
 		</plugins>
 	</build>
 
+	<!-- https://github.com/ulisesbocchio/spring-boot-security-saml/issues/79 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>
+					org.springframework.security.extensions
+				</groupId>
+				<artifactId>spring-security-saml2-core</artifactId>
+				<version>1.0.8.RELEASE</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
