@@ -1,3 +1,37 @@
 DEMO
 
-$ mvn spring-boot:run  # requires Java 9 or later
+You need to use Java 9 or later:
+
+* Fedora 29: install java-9-openjdk-devel-9 and use JAVA_HOME=/usr/lib/jvm/jre-9
+
+Regular authentication:
+
+$ mvn spring-boot:run
+
+Password is admin/admin
+
+SAML:
+
+See https://github.com/ulisesbocchio/spring-boot-security-saml/
+
+Generate keys:
+
+openssl genrsa -out localhost.key 2048
+openssl req -new -x509 -key localhost.key -out localhost.pem -days 3650 -subj /CN=localhost
+openssl pkcs8 -topk8 -inform PEM -outform DER -in  localhost.key -out  localhost.key.der -nocrypt
+
+$ mvn spring-boot:run -Dspring-boot.run.arguments=--spring.profiles.active=saml,--saml.sso.idp.metadata-location=<url>,--saml.sso.key-manager.private-key-der-location=file:./localhost.key.der,--saml.sso.key-manager.public-key-pem-location=file:./localhost.pem
+
+Pick up your metadata from:
+
+http://localhost:8080/saml/metadata
+
+and import it into your SAML provider.
+
+FreeIPA SAML Notes:
+
+Add:
+
+--saml.sso.profile-options.name-id=urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+
+to the spring-boot.run.arguments list.
