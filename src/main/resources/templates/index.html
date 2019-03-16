@@ -1,5 +1,6 @@
 <html>
 	<body>
+		<span th:text="${principal.username}">user</span>
 		<ul>
 			<li th:each="table: ${tables}">
 				<a href="table.html" th:href="@{/table/{table}/(table=${table.name})}" th:text="${table.name}">table</a>
