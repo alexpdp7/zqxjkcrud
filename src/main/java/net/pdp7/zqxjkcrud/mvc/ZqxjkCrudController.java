@@ -5,6 +5,7 @@ import static java.util.Map.entry;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,9 @@ public class ZqxjkCrudController {
 	@RequestMapping("/")
 	public ModelAndView index() {
 		return new ModelAndView("index",
-				Map.of("tables", dao.getTables().values()));
+				Map.ofEntries(
+						entry("tables", dao.getTables().values()),
+						entry("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal())));
 	}
 
 	@RequestMapping("/table/{name}")
