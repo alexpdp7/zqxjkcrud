@@ -20,6 +20,7 @@ public class SamlConfiguration extends WebSecurityConfigurerAdapter {
 			@Override
 			public void configure(HttpSecurity http) {
 				try {
+					http.csrf();
 					http.anonymous().disable();
 				} catch (Exception e) {
 					throw new RuntimeException(e);
