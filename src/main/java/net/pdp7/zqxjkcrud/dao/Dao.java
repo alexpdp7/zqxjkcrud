@@ -47,15 +47,15 @@ public class Dao {
 									e -> e.getValue()));
 			switch (tableUpdate.action) {
 			case INSERT:
-				dslContext.insertInto(DSL.table(tableUpdate.table))
+				dslContext.insertInto(DSL.table(tableUpdate.table.getName()))
 						.set(fields)
 						.execute();
 				break;
 			case UPDATE:
-				dslContext.update(DSL.table(tableUpdate.table))
-					.set(fields)
-					.where(DSL.field("_id").cast(String.class).equal(tableUpdate.id))
-					.execute();
+				dslContext.update(DSL.table(tableUpdate.table.getName()))
+						.set(fields)
+						.where(DSL.field("_id").cast(String.class).equal(tableUpdate.id))
+						.execute();
 				break;
 			default:
 				throw new RuntimeException("Unknown operation");

@@ -10,7 +10,7 @@ public class Update {
 
 	public final List<TableUpdate> tableUpdates;
 
-	public Update(Map<String, String[]> form) {
+	public Update(Dao dao, Map<String, String[]> form) {
 		Map<String, String[]> data = MapUtils.subMap(form, "data/");
 		tableUpdates = data.keySet()
 				.stream()
@@ -20,18 +20,18 @@ public class Update {
 				.stream()
 				.sorted()
 				.map(i -> MapUtils.subMap(data, i.toString() + "/"))
-				.map(TableUpdate::new)
+				.map(f -> new TableUpdate(dao, f))
 				.collect(Collectors.toList());
 	}
 
 	public static final class TableUpdate {
-		public final String table;
+		public final Table table;
 		public final String id;
 		public final TableAction action;
 		public final Map<String, Object> fields;
 
-		private TableUpdate(Map<String, String[]> form) {
-			table = form.remove("_table")[0];
+		private TableUpdate(Dao dao, Map<String, String[]> form) {
+			table = dao.getTables().get(form.remove("_table")[0]);
 			action = TableAction.valueOf(form.remove("_action")[0]);
 			id = form.remove("_id")[0];
 			fields = form.keySet()
@@ -39,11 +39,15 @@ public class Update {
 					.map(k -> k.substring(0, k.indexOf("/")))
 					.collect(
 							Collectors
-									.toMap(k -> k, k -> convertField(MapUtils.subMap(form, k + "/"))));
+									.toMap(
+											k -> k,
+											k -> convertField(
+													table.getFields().get(k),
+													MapUtils.subMap(form, k + "/"))));
 		}
 
-		private Object convertField(Map<String, String[]> field) {
-			return field.get("value")[0];
+		private Object convertField(Field field, Map<String, String[]> form) {
+			return field.convert(form);
 		}
 	}
 

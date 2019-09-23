@@ -2,8 +2,8 @@
 	<body>
 		<form method="POST" action="/update">
 			<label th:each="field : ${table.fields}">
-				[[${field.name}]]
-				<input type="text" th:name="@{data/0/{field}/value(field=${field.name})}" th:value="${row.fields[field.name]}"/>
+				[[${field.key}]]
+				<input type="text" th:name="@{data/0/{field}/value(field=${field.key})}" th:value="${row.fields[field.key]}"/>
 			</label>
 			<input type="submit"/>
 			<input type="hidden" name="data/0/_table" th:value="${table.name}"/>
