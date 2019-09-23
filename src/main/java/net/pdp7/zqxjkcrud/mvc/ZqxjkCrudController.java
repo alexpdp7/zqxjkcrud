@@ -64,7 +64,7 @@ public class ZqxjkCrudController {
 
 	@PostMapping("/update")
 	public String update(String next, WebRequest request) {
-		Update update = new Update(request.getParameterMap());
+		Update update = new Update(dao, request.getParameterMap());
 		dao.update(update);
 		return "redirect:" + next;
 	}
