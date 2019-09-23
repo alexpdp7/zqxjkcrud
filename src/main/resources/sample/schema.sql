@@ -6,7 +6,7 @@ create table sample_app.users (
 	password                 text not null
 );
 
-CREATE TABLE sample_app.types (
+create table sample_app.types (
 	id                       serial primary key,
 	timestamp_value          timestamp with time zone,
 	date_value               date,
