@@ -15,7 +15,8 @@ DATABASE SELECTION
 $ mvn spring-boot:run \
         -Dspring-boot.run.arguments=\
 		--spring.datasource.url=<JDBC_URL>,\
-		--spring.datasource.driver-class-name=<DRIVER_CLASS>
+		--spring.datasource.driver-class-name=<DRIVER_CLASS>,\
+                --zqxjk.schema=<SCHEMA_WITH_ZQXJK>
 
 To connect to the database using Kerberos, you will need:
 
