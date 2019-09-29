@@ -20,7 +20,7 @@ public class SamlConfiguration extends WebSecurityConfigurerAdapter {
 			@Override
 			public void configure(HttpSecurity http) {
 				try {
-					http.antMatcher("/saml/SSO").csrf().disable();
+					http.csrf().ignoringAntMatchers("/saml/**");
 					http.anonymous().disable();
 				} catch (Exception e) {
 					throw new RuntimeException(e);
