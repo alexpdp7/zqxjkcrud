@@ -8,7 +8,7 @@ This will start the application with a Docker test database defined at:
 
 src/main/resources/sample/schema.sql 
 
-; the loging password is admin/admin
+with credentials admin/admin.
 
 DATABASE SELECTION
 
