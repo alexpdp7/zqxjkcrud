@@ -1,4 +1,7 @@
-<html>
+<html th:replace="~{layout :: layout(~{::title}, ~{::form})}">
+	<head>
+		<title>[[${table.name}]] - [[${row.display}]]</title>
+	</head>
 	<body>
 		<form method="POST" action="/update">
 			<label th:each="field : ${table.fields}">

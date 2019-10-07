@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title th:replace="${title}">Layout Title</title>
+	</head>
+	<body>
+		<p>Logged in as <span th:text="${principal.username}">user</span></p>
+		<div th:replace="${content}">
+			<p>Layout content</p>
+		</div>
+	</body>
+</html>

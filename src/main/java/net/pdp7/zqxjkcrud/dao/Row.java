@@ -42,7 +42,7 @@ public abstract class Row {
 
 		@Override
 		public String getDisplay() {
-			return null;
+			return "New";
 		}
 
 		@Override

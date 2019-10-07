@@ -2,6 +2,7 @@ package net.pdp7.zqxjkcrud.mvc;
 
 import static java.util.Map.entry;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,42 +25,48 @@ public class ZqxjkCrudController {
 	@Autowired
 	protected Dao dao;
 
+	@SafeVarargs
+	protected final ModelAndView model(String viewName, Map.Entry<? extends String, ? extends Object>... entries) {
+		Map<String, Object> model = new HashMap<String, Object>(Map.<String, Object>ofEntries(entries));
+		model.put("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		return new ModelAndView(viewName, model);
+	}
+
 	@RequestMapping("/")
 	public ModelAndView index() {
-		return new ModelAndView("index",
-				Map.ofEntries(
-						entry("tables", dao.getTables().values()),
-						entry("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal())));
+		return model(
+				"index",
+				entry("tables", dao.getTables().values()));
 	}
 
 	@RequestMapping("/table/{name}")
 	public ModelAndView table(@PathVariable String name) {
 		Table table = dao.getTables().get(name);
-		return new ModelAndView("table",
-				Map.ofEntries(
-						entry("table", table),
-						entry("rows", table.getRows())));
+		return model(
+				"table",
+				entry("table", table),
+				entry("rows", table.getRows()));
 	}
 
 	@RequestMapping("/table/{name}/new")
 	public ModelAndView newView(@PathVariable String name) {
 		Table table = dao.getTables().get(name);
-		return new ModelAndView("row",
-				Map.ofEntries(
-						entry("table", table),
-						entry("row", new Row.TransientRow()),
-						entry("action", Update.TableAction.INSERT)));
+		return model(
+				"row",
+				entry("table", table),
+				entry("row", new Row.TransientRow()),
+				entry("action", Update.TableAction.INSERT));
 	}
 
 	@RequestMapping("/table/{name}/row/{id}")
 	public ModelAndView rowView(@PathVariable String name, @PathVariable String id) {
 		Table table = dao.getTables().get(name);
 		Row row = table.getRow(id);
-		return new ModelAndView("row",
-				Map.ofEntries(
-						entry("table", table),
-						entry("row", row),
-						entry("action", Update.TableAction.UPDATE)));
+		return model(
+				"row",
+				entry("table", table),
+				entry("row", row),
+				entry("action", Update.TableAction.UPDATE));
 	}
 
 	@PostMapping("/update")

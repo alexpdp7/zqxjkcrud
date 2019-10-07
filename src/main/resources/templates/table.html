@@ -1,11 +1,16 @@
-<html>
+<html th:replace="~{layout :: layout(~{::title}, ~{::section})}">
+	<head>
+		<title th:text="${table.name}">Table</title>
+	</head>
 	<body>
-		<p th:text="${table.name}">Table</p>
-		<table>
-			<tr th:each="row : ${rows}">
-				<td><a th:href="@{/table/{table}/row/{id}(table=${table.name}, id=${row.id})}" th:text="${row.display}">Display</a></td>
-			</tr>
-		</table>
-		<a th:href="@{/table/{table}/new/(table=${table.name})}">New</a>
+		<section>
+			<p th:text="${table.name}">Table</p>
+			<table>
+				<tr th:each="row : ${rows}">
+					<td><a th:href="@{/table/{table}/row/{id}(table=${table.name}, id=${row.id})}" th:text="${row.display}">Display</a></td>
+				</tr>
+			</table>
+			<a th:href="@{/table/{table}/new/(table=${table.name})}">New</a>
+		</section>
 	</body>
 </html>
