@@ -5,6 +5,7 @@
 	<body>
 		<section>
 			<p><a href="/">Index</a> - <span th:text="${table.name}">Table</span></p>
+			<a th:href="@{/table/{table}/new/(table=${table.name})}">New</a>
 			<table>
 				<tr th:each="row : ${rows}">
 					<td><a th:href="@{/table/{table}/row/{id}(table=${table.name}, id=${row.id})}" th:text="${row.display}">Display</a></td>
