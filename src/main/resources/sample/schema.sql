@@ -24,7 +24,7 @@ create table sample_app.sorting (
 	value                    varchar
 );
 
-insert into sample_app.sorting(value) select random() * 1000 as value from generate_series(1, 100);
+insert into sample_app.sorting(value) select random() * 1000 as value from generate_series(1, 1000);
 
 drop schema if exists test cascade;
 

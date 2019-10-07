@@ -31,6 +31,7 @@ public class Table {
 	public List<Row> getRows() {
 		return dslContext.select().from(getName())
 				.orderBy(getOrdering())
+				.limit(100)
 				.fetch(r -> new Row.RecordRow(r));
 	}
 
