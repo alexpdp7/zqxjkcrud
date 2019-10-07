@@ -37,6 +37,8 @@ public class Update {
 			fields = form.keySet()
 					.stream()
 					.map(k -> k.substring(0, k.indexOf("/")))
+					.collect(Collectors.toSet())
+					.stream()
 					.collect(
 							Collectors
 									.toMap(

@@ -22,6 +22,8 @@ public class Field {
 
 	public String getWidgetName() {
 		switch (column.getType().getName()) {
+		case "timestamptz":
+			return "widget-timestamp";
 		case "date":
 			return "widget-date";
 		default:
@@ -34,7 +36,11 @@ public class Field {
 		case "numeric":
 			return new BigDecimal(form.get("value")[0]);
 		case "timestamptz":
-			return Timestamp.from(ZonedDateTime.parse(form.get("value")[0]).toInstant());
+			return Timestamp.valueOf(
+					form.get("value/date")[0] + " " +
+					form.get("value/time")[0] + ":" +
+					form.get("value/s")[0] + "." +
+					form.get("value/ms")[0]);
 		case "date":
 			return LocalDate.parse(form.get("value")[0]);
 		default:
