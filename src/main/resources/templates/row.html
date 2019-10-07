@@ -4,6 +4,7 @@
 	</head>
 	<body>
 		<form method="POST" action="/update">
+			<p><a href="/">Index</a> - <a href="../" th:text="${table.name}">Table</a> - <span th:text="${row.display}">Row</span></p>
 			<label th:each="field : ${table.fields}">
 				[[${field.key}]]
 				<input type="text" th:name="@{data/0/{field}/value(field=${field.key})}" th:value="${row.fields[field.key]}"/>

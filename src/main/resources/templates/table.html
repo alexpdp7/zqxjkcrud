@@ -4,7 +4,7 @@
 	</head>
 	<body>
 		<section>
-			<p th:text="${table.name}">Table</p>
+			<p><a href="/">Index</a> - <span th:text="${table.name}">Table</span></p>
 			<table>
 				<tr th:each="row : ${rows}">
 					<td><a th:href="@{/table/{table}/row/{id}(table=${table.name}, id=${row.id})}" th:text="${row.display}">Display</a></td>
