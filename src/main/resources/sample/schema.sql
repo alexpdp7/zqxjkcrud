@@ -19,6 +19,13 @@ create table sample_app.types (
 
 insert into sample_app.types(timestamp_value, date_value, decimal_value) values (now(), now(), 33.4);
 
+create table sample_app.sorting (
+    id                       serial primary key,
+	value                    varchar
+);
+
+insert into sample_app.sorting(value) select random() * 1000 as value from generate_series(1, 100);
+
 drop schema if exists test cascade;
 
 create schema test;
@@ -41,3 +48,16 @@ create view test.types as
 	       date_value,
 	       decimal_value
 	from   sample_app.types;
+
+create view test.sorting as
+	select id as _id,
+	       value as _display,
+	       value as value
+	from   sample_app.sorting;
+
+create table _tables (
+	name                     text primary key,
+	default_sort             text[]
+);
+
+insert into _tables(name, default_sort) values ('sorting', '{"value", "desc"}');
