@@ -1,3 +1,5 @@
+drop schema if exists sample_app cascade;
+
 create schema sample_app;
 
 create table sample_app.users (
@@ -16,6 +18,8 @@ create table sample_app.types (
 );
 
 insert into sample_app.types(timestamp_value, date_value, decimal_value) values (now(), now(), 33.4);
+
+drop schema if exists test cascade;
 
 create schema test;
 
