@@ -7,7 +7,7 @@
 			<p><a href="/">Index</a> - <a href="../" th:text="${table.name}">Table</a> - <span th:text="${row.display}">Row</span></p>
 			<label th:each="field : ${table.fields}">
 				[[${field.key}]]
-				<input type="text" th:name="@{data/0/{field}/value(field=${field.key})}" th:value="${row.fields[field.key]}"/>
+				<input type="text" th:replace="${field.value.widgetName}::widget(${field}, ${row})"/>
 			</label>
 			<input type="submit"/>
 			<input type="hidden" name="data/0/_table" th:value="${table.name}"/>

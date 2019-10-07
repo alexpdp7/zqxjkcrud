@@ -20,6 +20,15 @@ public class Field {
 		return column.getName();
 	}
 
+	public String getWidgetName() {
+		switch (column.getType().getName()) {
+		case "date":
+			return "widget-date";
+		default:
+			return "widget-default";
+		}
+	}
+
 	public Object convert(Map<String, String[]> form) {
 		switch (column.getType().getName()) {
 		case "numeric":
