@@ -6,6 +6,8 @@ create table sample_app.users (
 	password                 text not null
 );
 
+insert into sample_app.users(username, password) values ('admin', '{noop}admin');
+
 create table sample_app.types (
 	id                       serial primary key,
 	timestamp_value          timestamp with time zone,
@@ -13,7 +15,7 @@ create table sample_app.types (
 	decimal_value            numeric(6, 3)
 );
 
-insert into sample_app.users(username, password) values ('admin', '{noop}admin');
+insert into sample_app.types(timestamp_value, date_value, decimal_value) values (now(), now(), 33.4);
 
 create schema test;
 
