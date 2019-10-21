@@ -30,7 +30,7 @@ public class Update {
 		public final TableAction action;
 		public final Map<String, Object> fields;
 
-		private TableUpdate(Dao dao, Map<String, String[]> form) {
+		private TableUpdate(Dao dao,Map<String, String[]> form) {
 			table = dao.getTables().get(form.remove("_table")[0]);
 			action = TableAction.valueOf(form.remove("_action")[0]);
 			id = form.remove("_id")[0];
