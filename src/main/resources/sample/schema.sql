@@ -14,10 +14,11 @@ create table sample_app.types (
 	id                       serial primary key,
 	timestamp_value          timestamp with time zone,
 	date_value               date,
-	decimal_value            numeric(6, 3)
+	decimal_value            numeric(6, 3),
+	boolean_value            boolean
 );
 
-insert into sample_app.types(timestamp_value, date_value, decimal_value) values (now(), now(), 33.4);
+insert into sample_app.types(timestamp_value, date_value, decimal_value, boolean_value) values (now(), now(), 33.4, true);
 
 create table sample_app.sorting (
     id                       serial primary key,
@@ -46,7 +47,8 @@ create view test.types as
 	       id as _display,
 	       timestamp_value,
 	       date_value,
-	       decimal_value
+	       decimal_value,
+	       boolean_value
 	from   sample_app.types;
 
 create view test.sorting as

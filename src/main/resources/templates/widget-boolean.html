@@ -1,0 +1,1 @@
+<input th:fragment="widget(field, row)" type="checkbox" th:name="@{data/0/{field}/value(field=${field.key})}" th:checked="${row.fields[field.key]}" value="checked"/>
