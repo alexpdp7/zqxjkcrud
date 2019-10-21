@@ -9,9 +9,11 @@ import schemacrawler.schema.Column;
 
 public class Field {
 
+	protected final Table table;
 	protected final Column column;
 
-	public Field(Column column) {
+	public Field(Table table, Column column) {
+		this.table = table;
 		this.column = column;
 	}
 
@@ -20,13 +22,21 @@ public class Field {
 	}
 
 	public String getWidgetName() {
-		switch (column.getType().getName()) {
+		String widgetType = column.getType().getName();
+		Map<String, Object> columnInfo = table.getColumnInfo(this.column);
+		String widgetInfo = (String) columnInfo.get("widget");
+		if (widgetInfo != null) {
+			widgetType = widgetInfo;
+		}
+		switch (widgetType) {
 		case "timestamptz":
 			return "widget-timestamp";
 		case "date":
 			return "widget-date";
 		case "bool":
 			return "widget-boolean";
+		case "textarea":
+			return "widget-textarea";
 		default:
 			return "widget-default";
 		}
