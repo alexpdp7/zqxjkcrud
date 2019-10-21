@@ -20,6 +20,14 @@ create table sample_app.types (
 
 insert into sample_app.types(timestamp_value, date_value, decimal_value, boolean_value) values (now(), now(), 33.4, true);
 
+create table sample_app.custom_widgets (
+	id                       serial primary key,
+	textarea                 text
+);
+
+insert into sample_app.custom_widgets(textarea) values ('foo
+bar');
+
 create table sample_app.sorting (
     id                       serial primary key,
 	value                    varchar
@@ -51,6 +59,12 @@ create view test.types as
 	       boolean_value
 	from   sample_app.types;
 
+create view test.custom_widgets as
+	select id as _id,
+	       id as _display,
+	       textarea
+	from   sample_app.custom_widgets;
+
 create view test.sorting as
 	select id as _id,
 	       value as _display,
@@ -63,3 +77,12 @@ create table _tables (
 );
 
 insert into _tables(name, default_sort) values ('sorting', '{"value", "desc"}');
+
+create table _columns (
+	table_name               text,
+	name                     text,
+	widget                   text,
+	primary key(table_name, name)
+);
+
+insert into _columns(table_name, name, widget) values ('custom_widgets', 'textarea', 'textarea');

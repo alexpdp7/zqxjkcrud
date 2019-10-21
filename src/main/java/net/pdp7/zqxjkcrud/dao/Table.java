@@ -13,6 +13,7 @@ import org.jooq.SortField;
 import org.jooq.impl.DSL;
 
 import net.pdp7.zqxjkcrud.ZqxjkCrudException;
+import schemacrawler.schema.Column;
 
 public class Table {
 
@@ -68,11 +69,23 @@ public class Table {
 		return tableInfo;
 	}
 
+	public Map<String, Object> getColumnInfo(Column column) {
+		Map<String, Object> columnInfo = dslContext.select()
+				.from("_columns")
+				.where(DSL.field("table_name").equal(getName()))
+				.and(DSL.field("name").equal(column.getName()))
+				.fetchOneMap();
+		if (columnInfo == null) {
+			columnInfo = new HashMap<String, Object>();
+		}
+		return columnInfo;
+	}
+
 	public Map<String, Field> getFields() {
 		return table.getColumns()
 				.stream()
 				.filter(c -> !c.getName().startsWith("_"))
-				.collect(Collectors.toMap(c -> c.getName(), c -> new Field(c)));
+				.collect(Collectors.toMap(c -> c.getName(), c -> new Field(this, c)));
 	}
 
 	public Row getRow(String id) {
@@ -88,4 +101,5 @@ public class Table {
 			super("Unknown ordering " + ordering + " on table " + table);
 		}
 	}
+
 }
