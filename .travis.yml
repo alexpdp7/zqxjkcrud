@@ -13,7 +13,7 @@ jobs:
     - stage: push image
       install: true
       script:
-        - docker build -t zqxjkcrud:latest .
+        - docker build -t alexpdp7/zqxjkcrud:latest .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push alexpdp7/zqxjkcrud:latest
       if: type = push AND branch = master
