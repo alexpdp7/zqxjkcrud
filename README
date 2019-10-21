@@ -8,7 +8,11 @@ This will start the application with a Docker test database defined at:
 
 src/main/resources/sample/schema.sql 
 
-with credentials admin/admin.
+with credentials admin/admin or:
+
+$ docker run -it -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080 --rm alexpdp7/zqxjkcrud
+
+to run with Docker (passing docker.sock as the demo itself runs Postgres using Docker).
 
 DATABASE SELECTION
 
@@ -71,3 +75,5 @@ This will build a Docker image. You can run the demo with:
 $ docker run -it -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080 --rm zqxjkcrud
 
 ; -v /var/run/docker.sock:/var/run/docker.sock passes the Docker socket to the container, so it can start the test database.
+
+This image is published automatically by Travis on pushes to master as alexpdp7/zqxjkcrud on Docker Hub.
