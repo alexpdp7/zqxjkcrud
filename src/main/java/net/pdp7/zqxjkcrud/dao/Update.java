@@ -34,18 +34,15 @@ public class Update {
 			table = dao.getTables().get(form.remove("_table")[0]);
 			action = TableAction.valueOf(form.remove("_action")[0]);
 			id = form.remove("_id")[0];
-			fields = form.keySet()
-					.stream()
-					.map(k -> k.substring(0, k.indexOf("/")))
-					.collect(Collectors.toSet())
+			fields = table.getFields()
+					.entrySet()
 					.stream()
 					.collect(
-							Collectors
-									.toMap(
-											k -> k,
-											k -> convertField(
-													table.getFields().get(k),
-													MapUtils.subMap(form, k + "/"))));
+							Collectors.toMap(
+									e -> e.getKey(),
+									e -> convertField(
+											e.getValue(),
+											MapUtils.subMap(form, e.getKey() + "/"))));
 		}
 
 		private Object convertField(Field field, Map<String, String[]> form) {

@@ -25,6 +25,8 @@ public class Field {
 			return "widget-timestamp";
 		case "date":
 			return "widget-date";
+		case "bool":
+			return "widget-boolean";
 		default:
 			return "widget-default";
 		}
@@ -41,6 +43,8 @@ public class Field {
 				+ "." + form.get("value/ms")[0]);
 		case "date":
 			return LocalDate.parse(form.get("value")[0]);
+		case "bool":
+			return form.get("value") != null;
 		default:
 			return form.get("value")[0];
 		}
