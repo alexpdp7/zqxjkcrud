@@ -71,18 +71,18 @@ create view test.sorting as
 	       value as value
 	from   sample_app.sorting;
 
-create table _tables (
+create table test._tables (
 	name                     text primary key,
 	default_sort             text[]
 );
 
-insert into _tables(name, default_sort) values ('sorting', '{"value", "desc"}');
+insert into test._tables(name, default_sort) values ('sorting', '{"value", "desc"}');
 
-create table _columns (
+create table test._columns (
 	table_name               text,
 	name                     text,
 	widget                   text,
 	primary key(table_name, name)
 );
 
-insert into _columns(table_name, name, widget) values ('custom_widgets', 'textarea', 'textarea');
+insert into test._columns(table_name, name, widget) values ('custom_widgets', 'textarea', 'textarea');
