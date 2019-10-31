@@ -77,3 +77,7 @@ $ docker run -it -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080 --rm 
 ; -v /var/run/docker.sock:/var/run/docker.sock passes the Docker socket to the container, so it can start the test database.
 
 This image is published automatically by Travis on pushes to master as alexpdp7/zqxjkcrud on Docker Hub.
+
+HELM
+
+See HELM.dm
