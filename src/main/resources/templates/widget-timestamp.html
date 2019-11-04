@@ -1,8 +1,8 @@
-<span th:fragment="widget(field, row)">
-	<input type="date"   th:name="@{data/0/{field}/value/date(field=${field.key})}" th:value="${#dates.format(row.fields[field.key]?.toInstant(), 'yyyy-MM-dd')}"/>
-	<input type="time"   th:name="@{data/0/{field}/value/time(field=${field.key})}" th:value="${#dates.format(row.fields[field.key]?.toInstant(), 'HH:mm')}"/>
+<div th:fragment="widget(field, row)">
+	<input type="date"   class="zqxjk-ts-date" th:name="@{data/0/{field}/value/date(field=${field.key})}" th:value="${#dates.format(row.fields[field.key]?.toInstant(), 'yyyy-MM-dd')}"/>
+	<input type="time"   class="zqxjk-ts-time" th:name="@{data/0/{field}/value/time(field=${field.key})}" th:value="${#dates.format(row.fields[field.key]?.toInstant(), 'HH:mm')}"/>
 	:
-	<input type="number" th:name="@{data/0/{field}/value/s(field=${field.key})}" th:value="${#dates.format(row.fields[field.key]?.toInstant(), 'ss')}?:'00'" min="00" max="59" placeholder="00" style="width: 3em"/>
+	<input type="number" class="zqxjk-ts-s"    th:name="@{data/0/{field}/value/s(field=${field.key})}" th:value="${#dates.format(row.fields[field.key]?.toInstant(), 'ss')}?:'00'" min="00" max="59" placeholder="00" style="width: 3em"/>
 	.
-	<input type="number" th:name="@{data/0/{field}/value/ms(field=${field.key})}" th:value="${#dates.format(row.fields[field.key]?.toInstant(), 'SSS')?:'000'}" min="000" max="999" placeholder="000" style="width: 4em"/>
-</span>
+	<input type="number" class="zqxjk-ts-ms"   th:name="@{data/0/{field}/value/ms(field=${field.key})}" th:value="${#dates.format(row.fields[field.key]?.toInstant(), 'SSS')?:'000'}" min="000" max="999" placeholder="000" style="width: 4em"/>
+</div>
