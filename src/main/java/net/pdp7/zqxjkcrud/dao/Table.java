@@ -3,6 +3,7 @@ package net.pdp7.zqxjkcrud.dao;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -85,7 +86,7 @@ public class Table {
 		return table.getColumns()
 				.stream()
 				.filter(c -> !c.getName().startsWith("_"))
-				.collect(Collectors.toMap(c -> c.getName(), c -> new Field(this, c)));
+				.collect(Collectors.toMap(c -> c.getName(), c -> new Field(this, c), (o1, o2) -> o1, LinkedHashMap::new));
 	}
 
 	public Row getRow(String id) {
