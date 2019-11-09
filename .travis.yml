@@ -6,6 +6,8 @@ jobs:
       script: mvn test
     - name: validate
       script: mvn validate
+    - name: spotbugs
+      script: mvn spotbugs:check
     - stage: build image
       install: true
       script: docker build .
