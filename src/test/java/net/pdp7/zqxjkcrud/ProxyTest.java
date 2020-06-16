@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.PosixFilePermissions;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -31,63 +30,65 @@ import org.testcontainers.utility.MountableFile;
 @ContextConfiguration(initializers = ProxyTest.Initializer.class)
 public class ProxyTest {
 
-	@LocalServerPort
-	public int port;
+  @LocalServerPort public int port;
 
-	@Test
-	public void test() throws Exception {
-		Network network = Network.newNetwork();
-		try (BrowserWebDriverContainer<?> firefox = new BrowserWebDriverContainer<>();
-				NginxContainer<?> nginx = new NginxContainer<>()) {
+  @Test
+  public void test() throws Exception {
+    Network network = Network.newNetwork();
+    try (BrowserWebDriverContainer<?> firefox = new BrowserWebDriverContainer<>();
+        NginxContainer<?> nginx = new NginxContainer<>()) {
 
-			firefox.withCapabilities(new FirefoxOptions()).withNetwork(network);
-			nginx.withNetwork(network).withNetworkAliases("nginx");
+      firefox.withCapabilities(new FirefoxOptions()).withNetwork(network);
+      nginx.withNetwork(network).withNetworkAliases("nginx");
 
-			Testcontainers.exposeHostPorts(port);
-			String nginxConf = "events {}\n"
-					+ "http {\n"
-					+ "    server {\n"
-					+ "        listen 80;\n"
-					+ "        location / {\n"
-					+ "            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
-					+ "            proxy_set_header X-Forwarded-Proto $scheme;\n"
-					+ "            proxy_set_header X-Forwarded-Port 80;\n"
-					+ "            proxy_set_header Host $host;\n"
-					+ "            proxy_pass http://host.testcontainers.internal:" + port + ";\n"
-					+ "        }\n"
-					+ "    }\n"
-					+ "}\n";
-			Path nginxConfPath = Files.createTempFile(
-					"nginx",
-					"conf",
-					PosixFilePermissions
-							.asFileAttribute(
-									PosixFilePermissions.fromString("rw-------")));
-			Files.writeString(nginxConfPath, nginxConf, StandardOpenOption.CREATE);
-			MountableFile nginxConfFile = MountableFile.forHostPath(nginxConfPath, 0600);
-			nginx.withCopyFileToContainer(nginxConfFile, "/etc/nginx/nginx.conf")
-					.withExposedPorts(80)
-					.start();
-			firefox.start();
-			RemoteWebDriver driver = firefox.getWebDriver();
-			driver.get("http://nginx/");
-			assertEquals("Please sign in", driver.getTitle());
-			driver.findElementById("username").sendKeys("admin");
-			driver.findElementById("password").sendKeys("admin");
-			driver.findElementByTagName("button").click();
-			assertEquals("admin", driver.findElementByTagName("span").getText());
-		}
-	}
+      Testcontainers.exposeHostPorts(port);
+      String nginxConf =
+          "events {}\n"
+              + "http {\n"
+              + "    server {\n"
+              + "        listen 80;\n"
+              + "        location / {\n"
+              + "            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n"
+              + "            proxy_set_header X-Forwarded-Proto $scheme;\n"
+              + "            proxy_set_header X-Forwarded-Port 80;\n"
+              + "            proxy_set_header Host $host;\n"
+              + "            proxy_pass http://host.testcontainers.internal:"
+              + port
+              + ";\n"
+              + "        }\n"
+              + "    }\n"
+              + "}\n";
+      Path nginxConfPath =
+          Files.createTempFile(
+              "nginx",
+              "conf",
+              PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rw-------")));
+      Files.writeString(nginxConfPath, nginxConf, StandardOpenOption.CREATE);
+      MountableFile nginxConfFile = MountableFile.forHostPath(nginxConfPath, 0600);
+      nginx
+          .withCopyFileToContainer(nginxConfFile, "/etc/nginx/nginx.conf")
+          .withExposedPorts(80)
+          .start();
+      firefox.start();
+      RemoteWebDriver driver = firefox.getWebDriver();
+      driver.get("http://nginx/");
+      assertEquals("Please sign in", driver.getTitle());
+      driver.findElementById("username").sendKeys("admin");
+      driver.findElementById("password").sendKeys("admin");
+      driver.findElementByTagName("button").click();
+      assertEquals("admin", driver.findElementByTagName("span").getText());
+    }
+  }
 
-	public static class Initializer
-			implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-		@Override
-		public void initialize(ConfigurableApplicationContext applicationContext) {
-			applicationContext.addApplicationListener(
-					(ApplicationListener<WebServerInitializedEvent>) event -> {
-						Testcontainers.exposeHostPorts(event.getWebServer().getPort());
-					});
-		}
-	}
-
+  public static class Initializer
+      implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    @Override
+    public void initialize(ConfigurableApplicationContext applicationContext) {
+      applicationContext.addApplicationListener(
+          (ApplicationListener<WebServerInitializedEvent>)
+              event -> {
+                Testcontainers.exposeHostPorts(event.getWebServer().getPort());
+              });
+    }
+  }
 }

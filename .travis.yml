@@ -8,6 +8,8 @@ jobs:
       script: mvn validate
     - name: spotbugs
       script: mvn spotbugs:check
+    - name: spotless
+      script: mvn spotless:check
     - stage: build image
       install: true
       script: docker build .
