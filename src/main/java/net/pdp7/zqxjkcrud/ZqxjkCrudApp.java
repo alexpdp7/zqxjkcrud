@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import net.pdp7.zqxjkcrud.dao.CatalogRepository;
 import net.pdp7.zqxjkcrud.dao.Dao;
 import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
+import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
@@ -31,7 +32,7 @@ public class ZqxjkCrudApp {
 	@Bean
 	public SchemaCrawlerOptions schemaCrawlerOptions() {
 		return SchemaCrawlerOptionsBuilder.builder()
-				.includeSchemas(s -> s.equals(zqxjkSchema))
+				.withLimitOptions(LimitOptionsBuilder.builder().includeSchemas(s -> s.equals(zqxjkSchema)).toOptions())
 				.toOptions();
 	}
 
