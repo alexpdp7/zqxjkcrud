@@ -24,34 +24,33 @@ import org.testcontainers.containers.BrowserWebDriverContainer;
 @ContextConfiguration(initializers = SmokeTest.Initializer.class)
 public class SmokeTest {
 
-	@Rule
-	public BrowserWebDriverContainer<?> firefox = new BrowserWebDriverContainer<>()
-			.withCapabilities(new FirefoxOptions());
+  @Rule
+  public BrowserWebDriverContainer<?> firefox =
+      new BrowserWebDriverContainer<>().withCapabilities(new FirefoxOptions());
 
-	@LocalServerPort
-	public int port;
+  @LocalServerPort public int port;
 
-	@Test
-	public void test() {
-		Testcontainers.exposeHostPorts(port);
-		RemoteWebDriver driver = firefox.getWebDriver();
-		driver.get("http://host.testcontainers.internal:" + port + "/");
-		assertEquals("Please sign in", driver.getTitle());
-		driver.findElementById("username").sendKeys("admin");
-		driver.findElementById("password").sendKeys("admin");
-		driver.findElementByTagName("button").click();
-		assertEquals("admin", driver.findElementByTagName("span").getText());
-	}
+  @Test
+  public void test() {
+    Testcontainers.exposeHostPorts(port);
+    RemoteWebDriver driver = firefox.getWebDriver();
+    driver.get("http://host.testcontainers.internal:" + port + "/");
+    assertEquals("Please sign in", driver.getTitle());
+    driver.findElementById("username").sendKeys("admin");
+    driver.findElementById("password").sendKeys("admin");
+    driver.findElementByTagName("button").click();
+    assertEquals("admin", driver.findElementByTagName("span").getText());
+  }
 
-	public static class Initializer
-			implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-		@Override
-		public void initialize(ConfigurableApplicationContext applicationContext) {
-			applicationContext.addApplicationListener(
-					(ApplicationListener<WebServerInitializedEvent>) event -> {
-						Testcontainers.exposeHostPorts(event.getWebServer().getPort());
-					});
-		}
-	}
-
+  public static class Initializer
+      implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    @Override
+    public void initialize(ConfigurableApplicationContext applicationContext) {
+      applicationContext.addApplicationListener(
+          (ApplicationListener<WebServerInitializedEvent>)
+              event -> {
+                Testcontainers.exposeHostPorts(event.getWebServer().getPort());
+              });
+    }
+  }
 }
