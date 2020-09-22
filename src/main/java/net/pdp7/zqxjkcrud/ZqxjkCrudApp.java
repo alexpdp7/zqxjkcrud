@@ -29,10 +29,9 @@ public class ZqxjkCrudApp {
 
   @Bean
   public SchemaCrawlerOptions schemaCrawlerOptions() {
-    return SchemaCrawlerOptionsBuilder.builder()
+    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
         .withLimitOptions(
-            LimitOptionsBuilder.builder().includeSchemas(s -> s.equals(zqxjkSchema)).toOptions())
-        .toOptions();
+            LimitOptionsBuilder.builder().includeSchemas(s -> s.equals(zqxjkSchema)).toOptions());
   }
 
   @Bean
