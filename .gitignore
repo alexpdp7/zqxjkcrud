@@ -1,5 +1,4 @@
 target
-.checkstyle
 localhost.*
 .pmd
 .pmdruleset.xml
