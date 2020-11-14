@@ -20,11 +20,13 @@ public abstract class Row {
     }
 
     public String getId() {
-      return record.get("_id").toString();
+      Object id = record.get("_id");
+      assert id != null;
+      return id.toString();
     }
 
     public String getDisplay() {
-      return record.get("_display").toString();
+      return String.valueOf(record.get("_display"));
     }
 
     public Map<String, Object> getFields() {
