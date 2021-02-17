@@ -4,7 +4,7 @@ import org.jooq.DSLContext;
 import org.springframework.cache.annotation.Cacheable;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
+import schemacrawler.tools.utility.SchemaCrawlerUtility;
 
 public class CatalogRepository {
 
