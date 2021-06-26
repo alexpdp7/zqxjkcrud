@@ -17,10 +17,10 @@ to run with Docker (passing docker.sock as the demo itself runs Postgres using D
 DATABASE SELECTION
 
 $ mvn spring-boot:run \
-        -Dspring-boot.run.arguments=\
-		--spring.datasource.url=<JDBC_URL>,\
-		--spring.datasource.driver-class-name=<DRIVER_CLASS>,\
-                --zqxjk.schema=<SCHEMA_WITH_ZQXJK>
+        -Dspring-boot.run.arguments="\
+		--spring.datasource.url=<JDBC_URL> \
+		--spring.datasource.driver-class-name=<DRIVER_CLASS> \
+                --zqxjk.schema=<SCHEMA_WITH_ZQXJK>"
 
 To connect to the database using Kerberos, you will need:
 
@@ -46,11 +46,11 @@ $ openssl req -new -x509 -key localhost.key -out localhost.pem -days 3650 -subj 
 $ openssl pkcs8 -topk8 -inform PEM -outform DER -in  localhost.key -out  localhost.key.der -nocrypt
 
 $ mvn spring-boot:run \
-	-Dspring-boot.run.arguments=\
-		--spring.profiles.active=saml,\
-		--saml.sso.idp.metadata-location=<url>,\
-		--saml.sso.key-manager.private-key-der-location=file:./localhost.key.der,\
-		--saml.sso.key-manager.public-key-pem-location=file:./localhost.pem
+	-Dspring-boot.run.arguments="\
+		--spring.profiles.active=saml \
+		--saml.sso.idp.metadata-location=<url> \
+		--saml.sso.key-manager.private-key-der-location=file:./localhost.key.der \
+		--saml.sso.key-manager.public-key-pem-location=file:./localhost.pem"
 
 Pick up your metadata from:
 
