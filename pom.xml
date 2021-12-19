@@ -149,6 +149,9 @@
 						<version>4.5.2</version>
 					</dependency>
 				</dependencies>
+				<configuration>
+					<excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.diffplug.spotless</groupId>
