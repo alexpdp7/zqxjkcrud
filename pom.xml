@@ -83,6 +83,11 @@
 			<artifactId>schemacrawler</artifactId>
 			<version>16.16.14</version>
 		</dependency>
+		<dependency>
+			<groupId>us.fatehi</groupId>
+			<artifactId>schemacrawler-postgresql</artifactId>
+			<version>16.16.14</version>
+		</dependency>
 	</dependencies>
 
 	<build>
