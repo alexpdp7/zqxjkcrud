@@ -81,12 +81,12 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>16.16.18</version>
+			<version>16.17.1</version>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>16.16.18</version>
+			<version>16.17.1</version>
 		</dependency>
 	</dependencies>
 
@@ -144,7 +144,7 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.7.1.0</version>
+				<version>4.7.1.1</version>
 				<dependencies>
 					<!-- overwrite dependency on spotbugs if you want to specify the version 
 						of spotbugs -->
