@@ -35,13 +35,13 @@ public class ZqxjkCrudController {
     return model("index", entry("tables", dao.getTables().values()));
   }
 
-  @RequestMapping("/table/{name}")
+  @RequestMapping("/table/{name}/")
   public ModelAndView table(@PathVariable String name) {
     Table table = dao.getTables().get(name);
     return model("table", entry("table", table), entry("rows", table.getRows()));
   }
 
-  @RequestMapping("/table/{name}/new")
+  @RequestMapping("/table/{name}/new/")
   public ModelAndView newView(@PathVariable String name) {
     Table table = dao.getTables().get(name);
     return model(
