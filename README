@@ -1,6 +1,6 @@
 DEMO
 
-You need to use Java 11:
+You need to use Java 17:
 
 $ mvn spring-boot:run
 

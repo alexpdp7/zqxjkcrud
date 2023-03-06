@@ -5,12 +5,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -36,10 +37,10 @@ public class SmokeTest {
     RemoteWebDriver driver = firefox.getWebDriver();
     driver.get("http://host.testcontainers.internal:" + port + "/");
     assertEquals("Please sign in", driver.getTitle());
-    driver.findElementById("username").sendKeys("admin");
-    driver.findElementById("password").sendKeys("admin");
-    driver.findElementByTagName("button").click();
-    assertEquals("admin", driver.findElementByTagName("span").getText());
+    driver.findElement(By.id("username")).sendKeys("admin");
+    driver.findElement(By.id("password")).sendKeys("admin");
+    driver.findElement(By.tagName("button")).click();
+    assertEquals("admin", driver.findElement(By.tagName("span")).getText());
   }
 
   public static class Initializer
