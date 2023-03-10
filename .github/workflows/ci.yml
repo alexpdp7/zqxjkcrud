@@ -14,10 +14,10 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: 11
-    - run: mvn test
-    - run: mvn validate
-    - run: mvn spotbugs:check
-    - run: mvn spotless:check
+    - run: mvn -B test
+    - run: mvn -B validate
+    - run: mvn -B spotbugs:check
+    - run: mvn -B spotless:check
     - run: docker build .
     - uses: docker/setup-qemu-action@v1
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
