@@ -1,7 +1,7 @@
 FROM maven:latest
 COPY . /app
 WORKDIR app
-RUN mvn package -Dmaven.test.skip=true
+RUN mvn -B package -Dmaven.test.skip=true
 
 FROM openjdk:11-jre-slim
 COPY --from=0 /app/target/zqxjkcrud-master.jar /
