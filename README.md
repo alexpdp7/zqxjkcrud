@@ -31,3 +31,7 @@ $ mvn spring-boot:run \
 		--spring.datasource.driver-class-name=<DRIVER_CLASS> \
                 --zqxjk.schema=<SCHEMA_WITH_ZQXJK>"
 ```
+
+# HACKING
+
+Run tests (including integration tests) using `mvn test`.
