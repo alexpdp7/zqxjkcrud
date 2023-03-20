@@ -1,5 +1,6 @@
 package net.pdp7.zqxjkcrud;
 
+import javax.sql.DataSource;
 import net.pdp7.zqxjkcrud.dao.CatalogRepository;
 import net.pdp7.zqxjkcrud.dao.Dao;
 import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
@@ -18,6 +19,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 @Configuration
 public class ZqxjkCrudApp {
   @Autowired public DSLContext dslContext;
+  @Autowired public DataSource dataSource;
 
   @Bean
   public UserDetailsServiceImpl userDetailsService() {
@@ -36,7 +38,7 @@ public class ZqxjkCrudApp {
 
   @Bean
   public CatalogRepository catalogRepository() {
-    return new CatalogRepository(dslContext, schemaCrawlerOptions());
+    return new CatalogRepository(dataSource, schemaCrawlerOptions());
   }
 
   @Bean
