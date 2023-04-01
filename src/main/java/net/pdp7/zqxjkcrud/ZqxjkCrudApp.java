@@ -1,9 +1,7 @@
 package net.pdp7.zqxjkcrud;
 
 import javax.sql.DataSource;
-import net.pdp7.zqxjkcrud.dao.CatalogRepository;
-import net.pdp7.zqxjkcrud.dao.Dao;
-import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
+
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +9,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.saml2.provider.service.metadata.OpenSamlMetadataResolver;
+import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
+import org.springframework.security.saml2.provider.service.web.DefaultRelyingPartyRegistrationResolver;
+import org.springframework.security.saml2.provider.service.web.Saml2MetadataFilter;
+import org.springframework.security.saml2.provider.service.web.authentication.Saml2WebSsoAuthenticationFilter;
+import org.springframework.security.web.SecurityFilterChain;
+
+import net.pdp7.zqxjkcrud.dao.CatalogRepository;
+import net.pdp7.zqxjkcrud.dao.Dao;
+import net.pdp7.zqxjkcrud.security.UserDetailsServiceImpl;
 import schemacrawler.schemacrawler.LimitOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -18,35 +27,57 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 @SpringBootApplication
 @Configuration
 public class ZqxjkCrudApp {
-  @Autowired public DSLContext dslContext;
-  @Autowired public DataSource dataSource;
+	@Autowired
+	public DSLContext dslContext;
+	@Autowired
+	public DataSource dataSource;
 
-  @Bean
-  public UserDetailsServiceImpl userDetailsService() {
-    return new UserDetailsServiceImpl(dslContext);
-  }
+	@Bean
+	public UserDetailsServiceImpl userDetailsService() {
+		return new UserDetailsServiceImpl(dslContext);
+	}
 
-  @Value("${zqxjk.schema}")
-  public String zqxjkSchema;
+	@Value("${zqxjk.schema}")
+	public String zqxjkSchema;
 
-  @Bean
-  public SchemaCrawlerOptions schemaCrawlerOptions() {
-    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
-        .withLimitOptions(
-            LimitOptionsBuilder.builder().includeSchemas(s -> s.equals(zqxjkSchema)).toOptions());
-  }
+	@Bean
+	public SchemaCrawlerOptions schemaCrawlerOptions() {
+		return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions()
+				.withLimitOptions(
+						LimitOptionsBuilder.builder()
+								.includeSchemas(s -> s.equals(zqxjkSchema))
+								.toOptions());
+	}
 
-  @Bean
-  public CatalogRepository catalogRepository() {
-    return new CatalogRepository(dataSource, schemaCrawlerOptions());
-  }
+	@Bean
+	public CatalogRepository catalogRepository() {
+		return new CatalogRepository(dataSource, schemaCrawlerOptions());
+	}
 
-  @Bean
-  public Dao dao() {
-    return new Dao(catalogRepository(), dslContext);
-  }
+	@Bean
+	public Dao dao() {
+		return new Dao(catalogRepository(), dslContext);
+	}
 
-  public static void main(String[] args) {
-    SpringApplication.run(ZqxjkCrudApp.class, args);
-  }
+	@Autowired
+	RelyingPartyRegistrationRepository relyingPartyRegistrationRepository;
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		DefaultRelyingPartyRegistrationResolver relyingPartyRegistrationResolver = new DefaultRelyingPartyRegistrationResolver(
+				this.relyingPartyRegistrationRepository);
+		Saml2MetadataFilter filter = new Saml2MetadataFilter(
+				relyingPartyRegistrationResolver,
+				new OpenSamlMetadataResolver());
+
+		http.authorizeHttpRequests().anyRequest().authenticated();
+		http.saml2Login();
+		http
+				.addFilterBefore(filter, Saml2WebSsoAuthenticationFilter.class);
+		return http.build();
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(ZqxjkCrudApp.class, args);
+	}
 }

@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type = "text/css" href="/style.css"/>
 	</head>
 	<body>
-		<p>Logged in as <span th:text="${principal.username}">user</span></p>
+		<p>Logged in as <span th:text="${principal}">user</span></p>
 		<div th:replace="${content}">
 			<p>Layout content</p>
 		</div>

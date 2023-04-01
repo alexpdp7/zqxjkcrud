@@ -35,3 +35,18 @@ $ mvn spring-boot:run \
 # HACKING
 
 Run tests (including integration tests) using `mvn test`.
+
+# SAML
+
+```
+$ openssl genrsa -out localhost.key 2048
+$ openssl req -new -x509 -key localhost.key -out localhost.pem -days 3650 -subj /CN=localhost
+$ openssl pkcs8 -topk8 -inform PEM -outform DER -in  localhost.key -out  localhost.key.der -nocrypt
+```
+
+```
+$ mvn spring-boot:run -Dspring-boot.run.arguments="\
+	--spring.security.saml2.relyingparty.registration.foo.signing.credentials.private-key-location=file:./localhost.key.der \
+	--spring.security.saml2.relyingparty.registration.foo.signing.credentials.certificate-location=file:./localhost.pem \
+	--spring.security.saml2.relyingparty.registration.foo.assertingparty.metadata-uri=https://foo.bar/ \
+```
