@@ -10,6 +10,8 @@ import net.pdp7.zqxjkcrud.dao.Table;
 import net.pdp7.zqxjkcrud.dao.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +28,14 @@ public class ZqxjkCrudController {
   protected final ModelAndView model(
       String viewName, Map.Entry<? extends String, ? extends Object>... entries) {
     Map<String, Object> model = new HashMap<String, Object>(Map.<String, Object>ofEntries(entries));
-    model.put("principal", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    model.put("principal", principal);
+    if (principal instanceof User) {
+      model.put("username", ((User) principal).getUsername());
+    }
+    if (principal instanceof DefaultOidcUser) {
+      model.put("username", ((DefaultOidcUser) principal).getNickName());
+    }
     return new ModelAndView(viewName, model);
   }
 
