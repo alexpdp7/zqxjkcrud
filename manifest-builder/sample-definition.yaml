@@ -1,0 +1,17 @@
+namespace: apps
+host_name: app.example.com
+instance: app
+# optional
+image: quay.io/custom/image:latest
+database:
+  kind: Postgresql
+  host_name: db.example.com
+  database: app
+  user: app
+  schema: zqxjk
+ipsilon_oidc:
+- id: ipsilon
+  client_id: app
+  client_secret: 12345
+  url: https://ipsilon.example.com
+
