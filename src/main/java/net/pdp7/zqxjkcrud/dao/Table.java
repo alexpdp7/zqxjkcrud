@@ -64,7 +64,11 @@ public class Table {
 
   protected Map<String, Object> getTableInfo() {
     Map<String, Object> tableInfo =
-        dslContext.select().from("_tables").where(DSL.field("name").equal(getName())).fetchOneMap();
+        dslContext
+            .select(DSL.asterisk())
+            .from("_tables")
+            .where(DSL.field("name").equal(getName()))
+            .fetchOneMap();
     if (tableInfo == null) {
       tableInfo = new HashMap<String, Object>();
     }
