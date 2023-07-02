@@ -56,6 +56,8 @@ A tool is included to generate K8S manifests from a declarative YAML file.
 $ podman run -i --rm --entrypoint zqxjkcrud-manifest-builder quay.io/alexpdp7/zqxjkcrud:$tag <manifest-builder/sample-definition.yaml
 ```
 
+See https://github.com/alexpdp7/alexpdp7/tree/master/personal_infra/playbooks/roles/zqxjkcrud for an Ansible role.
+
 # Hacking
 
 Run tests (including integration tests) using `mvn test`.
