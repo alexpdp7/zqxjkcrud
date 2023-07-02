@@ -121,7 +121,7 @@
 						<path>
 							<groupId>com.google.errorprone</groupId>
 							<artifactId>error_prone_core</artifactId>
-							<version>2.19.1</version>
+							<version>2.20.0</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -149,7 +149,7 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.7.3.4</version>
+				<version>4.7.3.5</version>
 				<dependencies>
 					<!-- overwrite dependency on spotbugs if you want to specify the version 
 						of spotbugs -->
