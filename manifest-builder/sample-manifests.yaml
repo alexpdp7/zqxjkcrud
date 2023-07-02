@@ -1,0 +1,90 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apps
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app
+  name: app
+  namespace: apps
+spec:
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: app
+            optional: false
+        - secretRef:
+            name: app
+            optional: false
+        image: quay.io/custom/image:latest
+        name: app
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: app
+  name: app
+  namespace: apps
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: app
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app
+  namespace: apps
+spec:
+  rules:
+  - host: app.example.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: app
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+---
+apiVersion: v1
+kind: ConfigMap
+data:
+  SERVER_FORWARD_HEADERS_STRATEGY: NATIVE
+  SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+  SPRING_DATASOURCE_URL: jdbc:postgresql://db.example.com/app?user=app&currentSchema=zqxjk
+  SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_IPSILON_ISSUER_URI: https://ipsilon.example.com/openidc/
+  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_IPSILON_CLIENT_ID: app
+  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_IPSILON_REDIRECT_URI: https://app.example.com/login/oauth2/code/login-client
+  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_IPSILON_SCOPE: openid,profile
+  ZQXJK_SCHEMA: zqxjk
+metadata:
+  name: app
+  namespace: apps
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app
+  namespace: apps
+stringData:
+  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_IPSILON_CLIENT_SECRET: '12345'
