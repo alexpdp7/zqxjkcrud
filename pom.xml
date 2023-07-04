@@ -76,12 +76,12 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>16.19.11</version>
+			<version>16.20.1</version>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>16.19.11</version>
+			<version>16.20.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
