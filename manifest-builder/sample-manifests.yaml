@@ -29,6 +29,7 @@ spec:
             name: app
             optional: false
         image: quay.io/custom/image:latest
+        imagePullPolicy: Always
         name: app
         ports:
         - containerPort: 8080
