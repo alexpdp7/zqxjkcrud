@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import re
 import shlex
 import subprocess
 
@@ -24,6 +25,7 @@ def is_dirty():
 def build_images_and_push():
     tags = ["dirty"] if is_dirty() else [describe(False), describe(True)]
     for tag in tags:
+        tag = re.sub(r"\W", "_", tag)
         quay_expires_after = "never" if not is_dirty() and tag == "master" else "3d"
         _run(["podman", "build", ".", "--build-arg", f"QUAY_EXPIRES_AFTER={quay_expires_after}", "-t", f"zqxjkcrud:{tag}"])
         assert tag != "dirty", "attempting to push dirty image"
