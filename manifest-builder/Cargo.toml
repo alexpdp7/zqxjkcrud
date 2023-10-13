@@ -5,6 +5,6 @@ edition = "2021"
 
 [dependencies]
 krust-manifesto = { git = "https://github.com/alexpdp7/krust-manifesto", version = "0.1.0" }
-k8s-openapi = { version = "0.18.0", features = ["v1_26"], default_features = false }
+k8s-openapi = { version = "0.20.0", features = ["earliest"], default_features = false }
 serde = { version = "1.0.164", features = ["derive"] }
 serde_yaml = "0.9.21"
