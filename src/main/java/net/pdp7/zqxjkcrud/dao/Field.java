@@ -36,6 +36,8 @@ public class Field {
         return "widget-boolean";
       case "textarea":
         return "widget-textarea";
+      case "numeric":
+        return "widget-number";
       default:
         return "widget-default";
     }
