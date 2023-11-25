@@ -2,10 +2,6 @@ package net.pdp7.zqxjkcrud;
 
 import static org.junit.Assert.assertEquals;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.PosixFilePermissions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -24,7 +20,7 @@ import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.NginxContainer;
-import org.testcontainers.utility.MountableFile;
+import org.testcontainers.images.builder.Transferable;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -59,15 +55,8 @@ public class ProxyTest {
               + "        }\n"
               + "    }\n"
               + "}\n";
-      Path nginxConfPath =
-          Files.createTempFile(
-              "nginx",
-              "conf",
-              PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rw-------")));
-      Files.writeString(nginxConfPath, nginxConf, StandardOpenOption.CREATE);
-      MountableFile nginxConfFile = MountableFile.forHostPath(nginxConfPath, 0600);
       nginx
-          .withCopyFileToContainer(nginxConfFile, "/etc/nginx/nginx.conf")
+          .withCopyToContainer(Transferable.of(nginxConf), "/etc/nginx/nginx.conf")
           .withExposedPorts(80)
           .start();
       firefox.start();
