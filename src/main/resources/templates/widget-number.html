@@ -1,0 +1,1 @@
+<input th:fragment="widget(field, row)" type="number" th:name="@{data/0/{field}/value(field=${field.key})}" th:value="${row.fields[field.key]}"/>
