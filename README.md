@@ -8,13 +8,7 @@ $ mvn spring-boot:run
 
 This will start the application with a Docker test database defined at `src/main/resources/sample/schema.sql` with credentials admin/admin.
 
-For this to run under podman:
-
-```
-$ systemctl --user enable podman.socket --now
-$ export DOCKER_HOST=unix:///run/user/${UID}/podman/podman.sock
-$ export TESTCONTAINERS_RYUK_DISABLED=true
-```
+Use the `run-with-podman` script to run the previous command with podman.
 
 # Usage
 

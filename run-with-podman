@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+import sys
+
+
+default_command = ["mvn", "spring-boot:run"]
+
+command = sys.argv[1:] or default_command
+
+p = subprocess.run(["systemctl", "show", "--user", "podman.socket"], check=True, stdout=subprocess.PIPE, encoding="utf8")
+podman_socket_status = dict(map(lambda l: l.split("=", 1), p.stdout.splitlines()))
+podman_socket_active = podman_socket_status["ActiveState"] == "active"
+
+if not podman_socket_active:
+    print(f"podman socket active {podman_socket_active}, starting")
+    subprocess.run(["systemctl", "start", "--user", "podman.socket"], check=True)
+
+try:
+    xdg_runtime_dir = os.environ["XDG_RUNTIME_DIR"]
+    env = {
+        "DOCKER_HOST": f"unix://{xdg_runtime_dir}/podman/podman.sock",
+        "TESTCONTAINERS_RYUK_DISABLED": "true",
+    }
+    subprocess.run(command, check=True, env=env)
+finally:
+    if not podman_socket_active:
+        print(f"stopping podman socket")
+        subprocess.run(["systemctl", "stop", "--user", "podman.socket"], check=True)
