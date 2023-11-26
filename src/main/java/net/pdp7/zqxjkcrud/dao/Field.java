@@ -43,6 +43,10 @@ public class Field {
     }
   }
 
+  public String getStep() {
+    return BigDecimal.ONE.movePointLeft(column.getDecimalDigits()).toString();
+  }
+
   public Object convert(Map<String, String[]> form) {
     switch (column.getType().getName()) {
       case "numeric":
