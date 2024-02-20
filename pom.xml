@@ -76,12 +76,12 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>16.21.1</version>
+			<version>16.21.2</version>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>16.21.1</version>
+			<version>16.21.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
@@ -121,7 +121,7 @@
 						<path>
 							<groupId>com.google.errorprone</groupId>
 							<artifactId>error_prone_core</artifactId>
-							<version>2.24.1</version>
+							<version>2.25.0</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
