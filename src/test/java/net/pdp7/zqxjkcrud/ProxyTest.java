@@ -33,7 +33,7 @@ public class ProxyTest {
   public void test() throws Exception {
     Network network = Network.newNetwork();
     try (BrowserWebDriverContainer<?> firefox = new BrowserWebDriverContainer<>();
-        NginxContainer<?> nginx = new NginxContainer<>()) {
+        NginxContainer<?> nginx = new NginxContainer<>("nginx:1.27.0")) {
 
       firefox.withCapabilities(new FirefoxOptions()).withNetwork(network);
       nginx.withNetwork(network).withNetworkAliases("nginx");
