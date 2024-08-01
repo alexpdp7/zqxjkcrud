@@ -47,18 +47,18 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>1.20.0</version>
+			<version>1.20.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>selenium</artifactId>
-			<version>1.20.0</version>
+			<version>1.20.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>nginx</artifactId>
-			<version>1.20.0</version>
+			<version>1.20.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -76,12 +76,12 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>16.21.4</version>
+			<version>16.22.1</version>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>16.21.4</version>
+			<version>16.22.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
