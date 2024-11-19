@@ -116,12 +116,13 @@
 						<arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
 						<arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
 						<arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+						<arg>--should-stop=ifError=FLOW</arg>
 					</compilerArgs>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>com.google.errorprone</groupId>
 							<artifactId>error_prone_core</artifactId>
-							<version>2.35.1</version>
+							<version>2.36.0</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
