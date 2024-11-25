@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>16.22.3</version>
+			<version>16.23.1</version>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
