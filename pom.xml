@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>16.25.1</version>
+			<version>16.25.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
