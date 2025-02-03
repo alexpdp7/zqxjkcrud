@@ -26,7 +26,7 @@ def build_images_and_push():
     tags = ["dirty"] if is_dirty() else [describe(False), describe(True)]
     for tag in tags:
         tag = re.sub(r"\W", "_", tag)
-        quay_expires_after = "never" if not is_dirty() and tag == "master" else "3d"
+        quay_expires_after = "never" if not is_dirty() and tag == "master" else "15d"
         _run(["podman", "build", ".", "--build-arg", f"QUAY_EXPIRES_AFTER={quay_expires_after}", "-t", f"zqxjkcrud:{tag}"])
         assert tag != "dirty", "attempting to push dirty image"
         _run(["podman", "push", f"zqxjkcrud:{tag}", f"quay.io/alexpdp7/zqxjkcrud:{tag}"])
