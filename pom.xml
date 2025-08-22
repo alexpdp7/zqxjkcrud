@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.4</version>
+		<version>3.5.5</version>
 	</parent>
 	<dependencies>
 		<dependency>
@@ -76,12 +76,12 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>16.26.3</version>
+			<version>16.27.1</version>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>16.26.3</version>
+			<version>16.27.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
@@ -150,7 +150,7 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.9.3.2</version>
+				<version>4.9.4.0</version>
 				<configuration>
 					<excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
 				</configuration>
