@@ -10,7 +10,7 @@ COPY src /app/src
 WORKDIR app
 RUN mvn -B package -Dmaven.test.skip=true
 
-FROM docker.io/library/eclipse-temurin:17
+FROM docker.io/library/eclipse-temurin:21
 ARG QUAY_EXPIRES_AFTER=never
 LABEL quay.expires-after=$QUAY_EXPIRES_AFTER
 COPY --from=java_builder /app/target/zqxjkcrud-master.jar /
