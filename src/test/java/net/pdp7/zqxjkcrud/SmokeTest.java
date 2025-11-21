@@ -1,40 +1,42 @@
 package net.pdp7.zqxjkcrud;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.boot.web.context.WebServerInitializedEvent;
+import org.springframework.boot.web.server.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.Testcontainers;
-import org.testcontainers.containers.BrowserWebDriverContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.selenium.BrowserWebDriverContainer;
 
-@RunWith(SpringRunner.class)
+@org.testcontainers.junit.jupiter.Testcontainers
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(initializers = SmokeTest.Initializer.class)
 public class SmokeTest {
 
-  @Rule
-  public BrowserWebDriverContainer<?> firefox =
-      new BrowserWebDriverContainer<>().withCapabilities(new FirefoxOptions());
+  @Container
+  public BrowserWebDriverContainer firefox =
+      new BrowserWebDriverContainer("selenium/standalone-firefox:4.13.0");
 
   @LocalServerPort public int port;
 
   @Test
   public void test() {
-    Testcontainers.exposeHostPorts(port);
-    RemoteWebDriver driver = firefox.getWebDriver();
+    firefox.start();
+    RemoteWebDriver driver =
+        new RemoteWebDriver(firefox.getSeleniumAddress(), new FirefoxOptions());
     driver.get("http://host.testcontainers.internal:" + port + "/");
     assertEquals("Please sign in", driver.getTitle());
     driver.findElement(By.id("username")).sendKeys("admin");
