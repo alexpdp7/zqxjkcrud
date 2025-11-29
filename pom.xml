@@ -88,7 +88,7 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>17.1.6</version>
+			<version>17.1.7</version>
 		</dependency>
 	</dependencies>
 	<build>
