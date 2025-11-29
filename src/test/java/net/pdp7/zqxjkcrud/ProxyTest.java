@@ -1,29 +1,30 @@
 package net.pdp7.zqxjkcrud;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.boot.web.context.WebServerInitializedEvent;
+import org.springframework.boot.web.server.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.Testcontainers;
-import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.Network;
-import org.testcontainers.containers.NginxContainer;
 import org.testcontainers.images.builder.Transferable;
+import org.testcontainers.nginx.NginxContainer;
+import org.testcontainers.selenium.BrowserWebDriverContainer;
 
-@RunWith(SpringRunner.class)
+@org.testcontainers.junit.jupiter.Testcontainers
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(initializers = ProxyTest.Initializer.class)
 public class ProxyTest {
 
@@ -32,13 +33,14 @@ public class ProxyTest {
   @Test
   public void test() throws Exception {
     Network network = Network.newNetwork();
-    try (BrowserWebDriverContainer<?> firefox = new BrowserWebDriverContainer<>();
-        NginxContainer<?> nginx = new NginxContainer<>("nginx:1.27.0")) {
+    try (BrowserWebDriverContainer firefox =
+            new BrowserWebDriverContainer("selenium/standalone-firefox:4.13.0");
+        NginxContainer nginx = new NginxContainer("nginx:1.27.0")) {
 
-      firefox.withCapabilities(new FirefoxOptions()).withNetwork(network);
+      firefox.withNetwork(network);
+
       nginx.withNetwork(network).withNetworkAliases("nginx");
 
-      Testcontainers.exposeHostPorts(port);
       String nginxConf =
           "events {}\n"
               + "http {\n"
@@ -60,7 +62,8 @@ public class ProxyTest {
           .withExposedPorts(80)
           .start();
       firefox.start();
-      RemoteWebDriver driver = firefox.getWebDriver();
+      RemoteWebDriver driver =
+          new RemoteWebDriver(firefox.getSeleniumAddress(), new FirefoxOptions());
       driver.get("http://nginx/");
       assertEquals("Please sign in", driver.getTitle());
       driver.findElement(By.id("username")).sendKeys("admin");
