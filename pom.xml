@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>17.1.7-D</version>
+			<version>17.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
