@@ -1,5 +1,7 @@
 package net.pdp7.zqxjkcrud.dao;
 
+import java.sql.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -37,9 +39,22 @@ public class Table {
         .fetch(r -> new Row.RecordRow(r));
   }
 
+  protected Object getArrayUnchecked(Array array) {
+    try {
+      return array.getArray();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   protected Collection<OrderField<?>> getOrdering() {
     List<OrderField<?>> ordering = new ArrayList<OrderField<?>>();
-    String[] orderingStrs = (String[]) getTableInfo().getOrDefault("default_sort", new String[0]);
+    Object orderingObject = getTableInfo().getOrDefault("default_sort", new String[0]);
+    String[] orderingStrs =
+        (String[])
+            (orderingObject instanceof Array
+                ? getArrayUnchecked((Array) orderingObject)
+                : orderingObject);
     for (int i = 0; i < orderingStrs.length; i += 2) {
       ordering.add(createSortField(orderingStrs[i], orderingStrs[i + 1]));
     }
