@@ -9,6 +9,7 @@ import net.pdp7.zqxjkcrud.dao.Row;
 import net.pdp7.zqxjkcrud.dao.Table;
 import net.pdp7.zqxjkcrud.dao.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -28,7 +29,9 @@ public class ZqxjkCrudController {
   protected final ModelAndView model(
       String viewName, Map.Entry<? extends String, ? extends Object>... entries) {
     Map<String, Object> model = new HashMap<String, Object>(Map.<String, Object>ofEntries(entries));
-    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    assert authentication != null;
+    Object principal = authentication.getPrincipal();
     model.put("principal", principal);
     if (principal instanceof User) {
       model.put("username", ((User) principal).getUsername());
