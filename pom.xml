@@ -83,12 +83,12 @@
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler</artifactId>
-			<version>17.11.4</version>
+			<version>17.12.1</version>
 		</dependency>
 		<dependency>
 			<groupId>us.fatehi</groupId>
 			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>17.11.4</version>
+			<version>17.12.1</version>
 		</dependency>
 	</dependencies>
 	<build>
